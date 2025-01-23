@@ -30,6 +30,7 @@ services:
     depends_on:
       db:
         condition: service_healthy
+    user: "${USER_ID}:${GROUP_ID}"
     networks:
       - app-network
     tty: true

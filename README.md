@@ -1,4 +1,4 @@
-# PostgresSQL study
+# PostgreSQL study
 
 ## Setup
 
@@ -6,19 +6,19 @@
 
 ```console
 $ mkdir pgdata
-$ docker-compose up -d
+$ docker compose up -d
 ```
 
 - shutdown
 
 ```console
-docker compose down -v --remove-orphans
+$ docker compose down -v --remove-orphans
 ```
 
 データベースも削除する場合
 
 ```console
-docker compose down -v --remove-orphans && sudo rm -rf pgdata
+$ docker compose down -v --remove-orphans && sudo rm -rf pgdata
 ```
 
 ## Test
