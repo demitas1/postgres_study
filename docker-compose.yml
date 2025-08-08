@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   db:
     image: postgres:15
@@ -15,7 +13,7 @@ services:
       - "${POSTGRES_PORT}:5432"
     user: "${USER_ID}:${GROUP_ID}"
     networks:
-      - app-network
+      - postgresql-network
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
       interval: 10s
@@ -32,9 +30,22 @@ services:
         condition: service_healthy
     user: "${USER_ID}:${GROUP_ID}"
     networks:
-      - app-network
+      - postgresql-network
     tty: true
 
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin4_dev
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=${PGADMIN_EMAIL}
+      - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_PASSWORD}
+    ports:
+      - "${PGADMIN_PORT:-8080}:80"
+    networks:
+      - postgresql-network
+    depends_on:
+      - db
+
 networks:
-  app-network:
+  postgresql-network:
     driver: bridge
