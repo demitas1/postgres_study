@@ -28,6 +28,7 @@ services:
     volumes:
       - ./src:/app/src
       - ./scripts:/app/scripts
+      - ./test_data:/app/test_data
     depends_on:
       db:
         condition: service_healthy

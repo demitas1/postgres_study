@@ -7,6 +7,7 @@ Usage:
 Available apps:
     - connection_test: データベース接続テスト
     - task_demo: タスク管理デモ
+    - prefecture_demo: 都道府県データデモ
 """
 
 import os
@@ -49,11 +50,11 @@ def get_python_executable() -> Path:
     return venv_python
 
 
-def run_app(app_name: str) -> None:
+def run_app(app_name: str, app_args: list = None) -> None:
     """指定されたアプリケーションを実行"""
     
     # 利用可能なアプリケーション
-    available_apps = ['connection_test', 'task_demo']
+    available_apps = ['connection_test', 'task_demo', 'prefecture_demo']
     
     if app_name not in available_apps:
         print(f"Error: Unknown app '{app_name}'")
@@ -78,8 +79,10 @@ def run_app(app_name: str) -> None:
     print("=" * 50)
     
     try:
-        result = subprocess.run([str(venv_python), str(app_path)], 
-                               check=True, cwd=str(project_root))
+        cmd = [str(venv_python), str(app_path)]
+        if app_args:
+            cmd.extend(app_args)
+        result = subprocess.run(cmd, check=True, cwd=str(project_root))
     except subprocess.CalledProcessError as e:
         print(f"Application failed with exit code {e.returncode}")
         sys.exit(e.returncode)
@@ -87,12 +90,13 @@ def run_app(app_name: str) -> None:
 
 def main() -> None:
     """メイン関数"""
-    if len(sys.argv) != 2:
+    if len(sys.argv) < 2:
         print(__doc__)
         sys.exit(1)
     
     app_name = sys.argv[1]
-    run_app(app_name)
+    app_args = sys.argv[2:] if len(sys.argv) > 2 else None
+    run_app(app_name, app_args)
 
 
 if __name__ == "__main__":
