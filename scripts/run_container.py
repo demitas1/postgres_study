@@ -8,6 +8,7 @@ Available apps:
     - connection_test: データベース接続テスト  
     - task_demo: タスク管理デモ
     - prefecture_demo: 都道府県データデモ
+    - edo_recipe_demo: 江戸料理レシピ検索デモ
 """
 
 import os
@@ -40,7 +41,7 @@ def run_app(app_name: str, app_args: list = None) -> None:
     """指定されたアプリケーションを実行"""
     
     # 利用可能なアプリケーション
-    available_apps = ['connection_test', 'task_demo', 'prefecture_demo']
+    available_apps = ['connection_test', 'task_demo', 'prefecture_demo', 'edo_recipe_demo']
     
     if app_name not in available_apps:
         print(f"Error: Unknown app '{app_name}'")
